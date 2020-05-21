@@ -12,8 +12,8 @@ import (
 var db *dynamo.DB
 var awsRegion = "us-east-1"
 var tableName = "stocks"
-var awsAccessToken = "AKIAZVIXVMUXVIK3JCUJ"                //"Add_Your_Token_Here"
-var awsSecret = "xnO0Y5RoQy9Qd+wLTQpV3tb0twAATj/jEbIPL6o3" //"Add_Your_Secret_Here"
+var awsAccessToken = "Add_Your_Token_Here"
+var awsSecret = "Add_Your_Secret_Here"
 
 // Table gets the dynamo table after connection
 var Table dynamo.Table
