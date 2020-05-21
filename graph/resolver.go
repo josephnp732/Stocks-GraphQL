@@ -1,7 +1,8 @@
 package graph
 
-// This file will not be regenerated automatically.
-//
-// It serves as dependency injection for your app, add any dependencies you require here.
+import "github.com/josephnp732/Stocks-GraphQL/graph/model"
 
-type Resolver struct{}
+// Resolver is the resolver for the system
+type Resolver struct {
+	stocks []model.Stock
+}

@@ -1,28 +1,42 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+# --- Types ---
+type Stock {
+  exchange: String!
+  stock_symbol: String!
+  date: String!
+  stock_price_open: String!
+  stock_price_high: String!
+  stock_price_low: String!
+  stock_price_close: String!
+  stock_volume: String!
+  stock_price_adj_close: String!
 }
 
-type User {
-  id: ID!
-  name: String!
+# --- Inputs ---
+input NewStock {
+  exchange: String!
+  stock_symbol: String!
+  date: String!
+  stock_price_open: String!
+  stock_price_high: String!
+  stock_price_low: String!
+  stock_price_close: String!
+  stock_volume: String!
+  stock_price_adj_close: String!
 }
 
+input StockInput {
+  stock_symbol: String!
+  from_date: String!
+  to_date: String!
+}
+
+# --- Queries ---
 type Query {
-  todos: [Todo!]!
+  getStocks(stock_symbol: String!): [Stock]
+  getStocksByRange(input: StockInput!): [Stock]
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
-}
-
+# --- Mutations ---
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  addStock(input: NewStock!): Stock!
 }
