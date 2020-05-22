@@ -1,29 +1,29 @@
 package main
 
 import (
-	"log"
-	"net/http"
+	"fmt"
 	"os"
 
-	"github.com/99designs/gqlgen/graphql/handler"
-	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/josephnp732/Stocks-GraphQL/graph"
-	"github.com/josephnp732/Stocks-GraphQL/graph/generated"
+	"github.com/josephnp732/Stocks-GraphQL/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-const defaultPort = "8080"
+const defaultPort = ":8080"
 
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
+	} else {
+		port = fmt.Sprintf(":%s", port)
 	}
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	server := gin.Default()
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	server.GET("/", http.PlaygroundHandler())
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	server.POST("/query", http.GraphQLHandler())
+
+	server.Run(defaultPort)
 }
