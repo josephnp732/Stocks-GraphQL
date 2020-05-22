@@ -2,11 +2,13 @@ package http
 
 import (
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/99designs/gqlgen/handler"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	"github.com/josephnp732/Stocks-GraphQL/apq"
 	"github.com/josephnp732/Stocks-GraphQL/graph"
 	"github.com/josephnp732/Stocks-GraphQL/graph/generated"
@@ -32,6 +34,13 @@ func GraphQLHandler() gin.HandlerFunc {
 	srv := handler.GraphQL(
 		generated.NewExecutableSchema(c),
 		handler.EnablePersistedQueryCache(cache),
+		handler.WebsocketKeepAliveDuration(19*time.Second),
+		handler.WebsocketUpgrader(websocket.Upgrader{
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
+			EnableCompression: true,
+		}),
 	)
 
 	return func(c *gin.Context) {

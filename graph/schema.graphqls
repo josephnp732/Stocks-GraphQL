@@ -40,3 +40,8 @@ type Query {
 type Mutation {
   addStock(input: NewStock!): Stock!
 }
+
+# --- Subscription ---
+type Subscription {
+  stockAdded: Stock!
+}
