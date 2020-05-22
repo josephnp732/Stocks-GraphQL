@@ -11,12 +11,12 @@ import (
 const layoutISO string = "2006-01-02"
 
 // Addstock adds a new stock to dynamoDB
-func AddStock(input model.NewStock) (*model.Stock, error) {
+func AddStock(input model.NewStock) (model.Stock, error) {
 
 	t := time.Now().UTC()
 	date := t.Format(layoutISO)
 
-	newStock := &model.Stock{
+	newStock := model.Stock{
 		Exchange:           "NYSE",
 		StockSymbol:        input.StockSymbol,
 		Date:               date,
@@ -27,9 +27,10 @@ func AddStock(input model.NewStock) (*model.Stock, error) {
 		StockPriceOpen:     input.StockPriceOpen,
 	}
 
-	query := Table.Put(newStock)
+	query := Table.Put(&newStock).Run()
 	if query != nil {
-		return nil, fmt.Errorf("Unable to add Stock to the Database")
+		fmt.Print(query.Error())
+		return model.Stock{}, fmt.Errorf("Unable to add Stock to the Database")
 	}
 
 	return newStock, nil

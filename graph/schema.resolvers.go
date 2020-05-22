@@ -7,19 +7,16 @@ import (
 	"context"
 
 	stocks "github.com/josephnp732/Stocks-GraphQL/database"
-
 	"github.com/josephnp732/Stocks-GraphQL/graph/generated"
 	"github.com/josephnp732/Stocks-GraphQL/graph/model"
 )
 
-// AddStock creates a new Stock in the Database
 func (r *mutationResolver) AddStock(ctx context.Context, input model.NewStock) (*model.Stock, error) {
 	newStock, err := stocks.AddStock(input)
-	r.stocks = append(r.stocks, *newStock)
-	return newStock, err
+	r.stocks = append(r.stocks, newStock)
+	return &newStock, err
 }
 
-// Get a stock from the Database
 func (r *queryResolver) GetStocks(ctx context.Context, stockSymbol string) ([]*model.Stock, error) {
 	return stocks.GetStocksByTicker(stockSymbol)
 }

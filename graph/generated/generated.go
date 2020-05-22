@@ -265,9 +265,9 @@ type Stock {
 
 # --- Inputs ---
 input NewStock {
-  exchange: String!
+  exchange: String
   stock_symbol: String!
-  date: String!
+  date: String
   stock_price_open: String!
   stock_price_high: String!
   stock_price_low: String!
@@ -1947,7 +1947,7 @@ func (ec *executionContext) unmarshalInputNewStock(ctx context.Context, obj inte
 		switch k {
 		case "exchange":
 			var err error
-			it.Exchange, err = ec.unmarshalNString2string(ctx, v)
+			it.Exchange, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1959,7 +1959,7 @@ func (ec *executionContext) unmarshalInputNewStock(ctx context.Context, obj inte
 			}
 		case "date":
 			var err error
-			it.Date, err = ec.unmarshalNString2string(ctx, v)
+			it.Date, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
