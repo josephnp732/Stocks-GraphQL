@@ -23,7 +23,7 @@ func main() {
 
 	server.GET("/", http.PlaygroundHandler())
 
-	server.POST("/query", http.GraphQLHandler())
+	server.POST("/graphQL", http.GraphQLHandler())
 
 	server.Run(defaultPort)
 }

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"log"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -33,7 +34,7 @@ func init() {
 		Region: aws.String(awsRegion)},
 	)
 	if err != nil {
-		panic(err)
+		log.Panicln(err)
 	}
 
 	// Add AWS Credentials

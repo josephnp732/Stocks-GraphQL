@@ -4,13 +4,15 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/vektah/gqlparser/v2/gqlerror"
+
 	"github.com/josephnp732/Stocks-GraphQL/graph/model"
 )
 
 // Sample date format
 const layoutISO string = "2006-01-02"
 
-// Addstock adds a new stock to dynamoDB
+// AddStock adds a new stock to dynamoDB
 func AddStock(input model.NewStock) (model.Stock, error) {
 
 	t := time.Now().UTC()
@@ -30,7 +32,7 @@ func AddStock(input model.NewStock) (model.Stock, error) {
 	query := Table.Put(&newStock).Run()
 	if query != nil {
 		fmt.Print(query.Error())
-		return model.Stock{}, fmt.Errorf("Unable to add Stock to the Database")
+		return model.Stock{}, gqlerror.Errorf("Unable to add Stock to the Database")
 	}
 
 	return newStock, nil
