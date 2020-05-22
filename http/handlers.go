@@ -1,9 +1,13 @@
 package http
 
 import (
-	"github.com/99designs/gqlgen/graphql/handler"
+	"log"
+	"time"
+
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/99designs/gqlgen/handler"
 	"github.com/gin-gonic/gin"
+	"github.com/josephnp732/Stocks-GraphQL/apq"
 	"github.com/josephnp732/Stocks-GraphQL/graph"
 	"github.com/josephnp732/Stocks-GraphQL/graph/generated"
 )
@@ -18,7 +22,18 @@ func PlaygroundHandler() gin.HandlerFunc {
 
 // GraphQLHandler return sthe handler for the graphQL URL
 func GraphQLHandler() gin.HandlerFunc {
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+
+	cache, err := apq.NewCache(24 * time.Hour)
+	if err != nil {
+		log.Fatalf("cannot create APQ redis cache: %v", err)
+	}
+
+	c := generated.Config{Resolvers: &graph.Resolver{}}
+	srv := handler.GraphQL(
+		generated.NewExecutableSchema(c),
+		handler.EnablePersistedQueryCache(cache),
+	)
+
 	return func(c *gin.Context) {
 		srv.ServeHTTP(c.Writer, c.Request)
 	}
