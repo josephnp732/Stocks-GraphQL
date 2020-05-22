@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	stocks "github.com/josephnp732/Stocks-GraphQL/database"
 
@@ -15,7 +14,9 @@ import (
 
 // AddStock creates a new Stock in the Database
 func (r *mutationResolver) AddStock(ctx context.Context, input model.NewStock) (*model.Stock, error) {
-	panic(fmt.Errorf("not implemented"))
+	newStock, err := stocks.AddStock(input)
+	r.stocks = append(r.stocks, *newStock)
+	return newStock, err
 }
 
 // Get a stock from the Database

@@ -16,3 +16,6 @@
 
 # env files
 .env
+
+# vendor dir
+vendor
