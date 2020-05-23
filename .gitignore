@@ -19,3 +19,7 @@
 
 # vendor dir
 vendor
+
+# gcloud files
+app.yaml
+.gcloudignore
