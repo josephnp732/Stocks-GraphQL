@@ -15,7 +15,7 @@ GraphQL API to retrieve Historical Stocks data from DynamoDB
     - Go Modules: https://github.com/golang/go/wiki/Modules
 * `go mod download` to download the requirements
 * `go mod vendor` to download to local reposistory
-* Start the application:  `go run server.go`</br>
+* Start the application:  `go run main.go`</br>
 
 
 **Endpoint:** `localhost:8080`
