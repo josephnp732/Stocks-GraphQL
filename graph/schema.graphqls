@@ -1,0 +1,47 @@
+# --- Types ---
+type Stock {
+  exchange: String!
+  stock_symbol: String!
+  date: String!
+  stock_price_open: String!
+  stock_price_high: String!
+  stock_price_low: String!
+  stock_price_close: String!
+  stock_volume: String!
+  stock_price_adj_close: String!
+}
+
+# --- Inputs ---
+input NewStock {
+  exchange: String
+  stock_symbol: String!
+  date: String
+  stock_price_open: String!
+  stock_price_high: String!
+  stock_price_low: String!
+  stock_price_close: String!
+  stock_volume: String!
+  stock_price_adj_close: String!
+}
+
+input StockInput {
+  stock_symbol: String!
+  from_date: String!
+  to_date: String!
+}
+
+# --- Queries ---
+type Query {
+  getStocks(stock_symbol: String!): [Stock]
+  getStocksByRange(input: StockInput!): [Stock]
+}
+
+# --- Mutations ---
+type Mutation {
+  addStock(input: NewStock!): Stock!
+}
+
+# --- Subscription ---
+type Subscription {
+  stockAdded: Stock!
+}
