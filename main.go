@@ -1,13 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"os"
 
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
-	cors "github.com/rs/cors/wrapper/gin"
+	"github.com/josephnp732/Stocks-GraphQL/middleware"
 
 	"github.com/joho/godotenv"
 	"github.com/josephnp732/Stocks-GraphQL/http"
@@ -17,30 +13,20 @@ import (
 
 const defaultPort = ":8080"
 
-func main() {
+func init() {
 
-	//Load from local .env file
+	//Load from local .env file (for dev ENV)
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+}
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	} else {
-		port = fmt.Sprintf(":%s", port)
-	}
+func main() {
 
 	server := gin.Default()
 
-	// Create new session in a cookie
-	store := cookie.NewStore([]byte(http.RandToken(64)))
-	store.Options(sessions.Options{
-		Path: "/",
-	})
-	server.Use(sessions.Sessions("graphqlSession", store))
-	server.Use(cors.Default())
+	middleware.SetMiddlewares(server)
 
 	authorized := server.Group("/")
 	authorized.Use(http.AuthorizeRequest())
