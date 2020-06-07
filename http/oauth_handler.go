@@ -56,7 +56,7 @@ func HandleGoogleCallback(c *gin.Context) {
 
 	if err != nil {
 		log.Println(err.Error())
-		http.Error(c.Writer, `User Unauthorized!`, http.StatusUnauthorized)
+		http.Error(c.Writer, `User Unauthorized! Please Login`, http.StatusUnauthorized)
 	}
 
 	//log.Printf("Content: %s\n", content)
@@ -69,8 +69,9 @@ func AuthorizeRequest() gin.HandlerFunc {
 		session := sessions.Default(c)
 		v := session.Get("access_token")
 		if v == nil {
-			http.Error(c.Writer, `User Unauthorized! Please Login`, http.StatusUnauthorized)
-			c.Abort()
+			// if not authorized redirect to login page
+			http.Redirect(c.Writer, c.Request, "/", http.StatusTemporaryRedirect)
+			return
 		}
 		c.Next()
 	}

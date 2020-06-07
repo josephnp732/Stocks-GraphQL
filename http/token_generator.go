@@ -5,7 +5,7 @@ import (
 	"encoding/base64"
 )
 
-// RandToken generates a random @l length token.
+// RandToken generates a random @length length token.
 func RandToken(length int) string {
 	b := make([]byte, length)
 	rand.Read(b)
