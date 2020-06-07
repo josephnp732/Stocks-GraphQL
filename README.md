@@ -8,9 +8,11 @@ GraphQL API to retrieve Historical Stocks data from DynamoDB
 * Database contains 9 Million records of historical data
 * Project deployed on Google App Engine
 * Implements OAuth 2.0 with Google Integration
-* **Automated Persisted Query (APQ)** Redis Cache hosted on Redis Labs Enterprise Free Tier
+* **Automatic Persisted Query (APQ)** Redis Cache hosted on Redis Labs Enterprise Free Tier
 
-<font color="red"> API can only be accessed on the GraphQL playground </font>
+``` diff 
+! API can only be accessed on the GraphQL playground GUI
+```
 
 ### Environment Variables
 
