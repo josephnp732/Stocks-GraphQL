@@ -2,6 +2,7 @@ package apq
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"time"
 
@@ -23,8 +24,14 @@ func NewCache(ttl time.Duration) (*Cache, error) {
 	// redisAddress : Redis Host Address
 	redisAddress := os.Getenv("REDIS_ADDRESS")
 
+	// redisPass : redisPassword
+	redisPassword := os.Getenv("REDIS_PASS")
+
+	fmt.Println(redisPassword)
+
 	client := redis.NewClient(&redis.Options{
-		Addr: redisAddress,
+		Addr:     redisAddress,
+		Password: redisPassword,
 	})
 
 	err := client.Ping().Err()

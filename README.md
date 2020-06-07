@@ -1,12 +1,20 @@
 # Stocks-GraphQL
 GraphQL API to retrieve Historical Stocks data from DynamoDB
 
+### Features:
+
+* Implements Querys, Mutations and Subscriptions (https://medium.com/software-insight/graphql-queries-mutations-and-subscriptions-286522b263d9)
+* Data effeciently indexed and stored on DynamoDB 
+* Database contains 9 Million records of historical data
+* Project deployed on Google App Engine
+* **Automated Persisted Query (APQ)** Redis Cache hosted on Redis Labs Enterprise Free Tier
+
 ### Environment Variables
 
 `PORT` // PORT to run your application </br>
 `AWS_ACCESS_TOKEN` // Your AWS Access Token </br>
 `AWS_SECRET` // your AWS Secret </br>
-`REDIS_ADDRESS` _<host_name>:<port_name>_ // Redis Cache Host and Port (6379) 
+`REDIS_ADDRESS` _<host_name>:<port_name>_
 
 ## To Run the project:
 
@@ -18,6 +26,21 @@ GraphQL API to retrieve Historical Stocks data from DynamoDB
 * Start the application:  `go run main.go`</br>
 
 
-**Endpoint:** `localhost:8080`
+**Local Endpoint:** `localhost:8080`
 
+## To deploy on App Engine:
 
+**Follow Instructions from official website:** https://cloud.google.com/appengine/docs/standard/go/building-app
+
+#### app.yaml:
+
+```
+runtime: go113
+
+env_variables:
+  PORT: <port>
+  AWS_ACCESS_TOKEN:  <aws_access_token>
+  AWS_SECRET:  <aws_secret>
+  REDIS_ADDRESS:  <redis_address_with_port>
+  REDIS_PASS:  <redis_password>
+```
