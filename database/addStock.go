@@ -1,7 +1,7 @@
 package database
 
 import (
-	"fmt"
+	"log"
 	"time"
 
 	"github.com/vektah/gqlparser/v2/gqlerror"
@@ -31,7 +31,7 @@ func AddStock(input model.NewStock) (*model.Stock, error) {
 
 	query := Table.Put(newStock).Run()
 	if query != nil {
-		fmt.Print(query.Error())
+		log.Print(query.Error())
 		return &model.Stock{}, gqlerror.Errorf("Unable to add Stock to the Database")
 	}
 
